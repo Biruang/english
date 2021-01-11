@@ -1,10 +1,29 @@
 import React from "react";
+import ExerciseDisplay from "../../Components/ExerciseDisplay/ExerciseDisplay";
+import SentenceConstructor from "../../Components/SentenceConstructor";
+import Button from "../../Components/Button";
 
 const Exercise: React.FC = () => {
     return (
-        <React.Fragment>
-            Exercise
-        </React.Fragment>
+        <div>
+            <h1>
+                Переведите предложение
+            </h1>
+
+            <div>
+                <ExerciseDisplay />
+            </div>
+
+            <div>
+                <SentenceConstructor />
+            </div>
+
+            <div>
+                <Button>
+                    <span>Проверить</span>
+                </Button>
+            </div>
+        </div>
     );
 }
 

@@ -1,3 +1,3 @@
-import ExerciseDisplay from "./ExcerciseDisplay";
+import ExerciseDisplay from "./ExerciseDisplay";
 
 export default ExerciseDisplay;

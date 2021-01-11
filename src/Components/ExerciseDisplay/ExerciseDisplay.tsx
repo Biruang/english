@@ -1,6 +1,6 @@
 import React from "react";
 
-import './ExcerciseDisplay.css';
+import './ExerciseDisplay.css';
 
 const ExerciseDisplay: React.FC = () => {
     return(
