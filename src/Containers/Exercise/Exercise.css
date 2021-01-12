@@ -1,0 +1,24 @@
+.exercise-container{
+
+}
+
+.exercise-header{
+    font-size: 36px;
+    font-weight: 400;
+    text-shadow: -2px -4px 3px #FFFFFF, 2px 4px 3px rgba(0, 0, 0, 0.25);
+    color: #252525;
+
+    margin-bottom: 56px;
+}
+
+.exercise-display-wrap{
+    margin-bottom: 50px;
+}
+
+.exercise-constructor-wrap{
+    margin-bottom: 57px;
+}
+
+.exercise-button-wrap{
+    margin-bottom: 27px;
+}

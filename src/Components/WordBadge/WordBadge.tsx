@@ -2,10 +2,14 @@ import React from "react";
 
 import './WordBadge.css';
 
-const WordBadge: React.FC = () => {
+interface IWordBadge {
+    word: string
+}
+
+const WordBadge: React.FC<IWordBadge> = ({word}) => {
     return(
-        <div>
-            WordBadge
+        <div draggable className="word-badge">
+            {word}
         </div>
     )
 }

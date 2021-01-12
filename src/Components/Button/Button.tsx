@@ -4,7 +4,7 @@ import './Button.css';
 
 const Button: React.FC = ({children}) => {
     return(
-        <button>
+        <button className="button">
             {children}
         </button>
     )

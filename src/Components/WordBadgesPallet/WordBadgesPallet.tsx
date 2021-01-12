@@ -1,11 +1,12 @@
 import React from "react";
 
 import './WordBadgesPallet.css';
+import WordBadge from "../WordBadge";
 
 const WordBadgesPallet: React.FC = () => {
     return(
-        <div>
-            WordBadgesPallet
+        <div className="word-badges-pallet-container">
+            <WordBadge word="dddd" />
         </div>
     )
 }
