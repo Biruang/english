@@ -1,7 +1,7 @@
 import React from "react";
 
 import './ExerciseSentence.css';
-import {WordType} from "../../data/fakeStorage";
+import {WordType} from "../../Assets/data";
 import WordWithTranslation from "../WordWithTranslation";
 
 interface IExerciseSentence {

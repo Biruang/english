@@ -1,11 +1,24 @@
-.word-badge{
+.word-badge,
+.word-badge-dragged{
     display: inline-block;
+    width: 44px;
+    height: 21px;
     padding: 4px 13px 5px 13px;
-    margin-right: 10px;
     margin-bottom: 15px;
+    border-radius: 15px;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: center;
+}
 
+.word-badge{
     border: 1px solid #C9C9C9;
-    box-sizing: border-box;
     box-shadow: 0 8px 4px -6px rgba(0, 0, 0, 0.25);
-    border-radius: 13px;
+}
+
+.word-badge-dragged{
+    color: #E6E6E6;
+    background: #E6E6E6;
+    border: 1px solid transparent;
+    box-shadow: inset 0 8px 4px -6px rgba(0, 0, 0, 0.25);
 }

@@ -1,3 +1,5 @@
 .word-badges-pallet-container{
-    margin-right: -10px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }

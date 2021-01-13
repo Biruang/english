@@ -2,12 +2,12 @@ import React, {useState} from "react";
 import ExerciseDisplay from "../../Components/ExerciseDisplay/ExerciseDisplay";
 import SentenceConstructor from "../../Components/SentenceConstructor";
 import Button from "../../Components/Button";
-import data from "../../data/fakeStorage";
+import data from "../../Assets/data";
 
 import './Exercise.css';
 
 const Exercise: React.FC = () => {
-    const [words, setWords] = useState(data);
+    const words = data.sentenceByWords
 
     return (
         <div className="exercise-container">
@@ -16,11 +16,11 @@ const Exercise: React.FC = () => {
             </h1>
 
             <div className="exercise-display-wrap">
-                <ExerciseDisplay sentence={words} />
+                <ExerciseDisplay words={words} />
             </div>
 
             <div className="exercise-constructor-wrap">
-                <SentenceConstructor items={words} />
+                <SentenceConstructor items={data} />
             </div>
 
             <div className="exercise-button-wrap">
