@@ -1,12 +1,20 @@
 import React from "react";
 
 import './ExerciseSentence.css';
+import {WordType} from "../../data/fakeStorage";
+import WordWithTranslation from "../WordWithTranslation";
 
-const ExerciseSentence: React.FC = () => {
+interface IExerciseSentence {
+    item: Array<WordType>
+}
+
+const ExerciseSentence: React.FC<IExerciseSentence> = ({ item }) => {
     return (
-        <React.Fragment>
-            ExerciseSentence
-        </React.Fragment>
+        <div className="exercise-sentence-container">
+            {
+                item.map(i => <WordWithTranslation text={i.text} translation={i.translation} />)
+            }
+        </div>
     )
 }
 

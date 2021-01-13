@@ -1,6 +1,8 @@
 .word-badge{
     display: inline-block;
     padding: 4px 13px 5px 13px;
+    margin-right: 10px;
+    margin-bottom: 15px;
 
     border: 1px solid #C9C9C9;
     box-sizing: border-box;

@@ -11,13 +11,18 @@
 
 .exercise-display-dialog{
     width: 100%;
-    max-height: 32px;
+    margin-bottom: 119px;
     position: relative;
     padding: 17px 24px;
     margin-left: 14px;
 
     border: 2px solid #252525;
     border-radius: 20px 20px 20px 10px;
+}
+
+.exercise-display-dialog-sentence{
+    margin-right: -10px;
+    margin-bottom: -5px;
 }
 
 .exercise-display-dialog-triangle{

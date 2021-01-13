@@ -1,12 +1,19 @@
 import React from "react";
-
-import './WordBadgesPallet.css';
 import WordBadge from "../WordBadge";
 
-const WordBadgesPallet: React.FC = () => {
+import './WordBadgesPallet.css';
+import {WordType} from "../../data/fakeStorage";
+
+interface IWordBadgesPallet {
+    items: Array<WordType>
+}
+
+const WordBadgesPallet: React.FC<IWordBadgesPallet> = ({items}) => {
     return(
         <div className="word-badges-pallet-container">
-            <WordBadge word="dddd" />
+            {
+                items.map(item => <WordBadge word={item.text} />)
+            }
         </div>
     )
 }

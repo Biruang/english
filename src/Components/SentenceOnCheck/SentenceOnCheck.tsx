@@ -1,12 +1,20 @@
 import React from "react";
 
 import './SentenceOnCheck.css';
+import {WordType} from "../../data/fakeStorage";
+import WordBadge from "../WordBadge";
 
-const SentenceOnCheck: React.FC = () => {
+interface ISentenceOnCheck {
+    items: Array<WordType>
+}
+
+const SentenceOnCheck: React.FC<ISentenceOnCheck> = ({ items }) => {
     return(
-        <React.Fragment>
-            SentenceOnCheck
-        </React.Fragment>
+        <div className="sentence-on-check-container">
+            {
+                items.map(item => <WordBadge word={item.text} />)
+            }
+        </div>
     )
 }
 
