@@ -30,24 +30,46 @@ const Exercise: React.FC<IExercise> = (props) => {
         }
     }, [itemsOnCheck, props.data]);
 
+    const sortPalletItems = (pallet: Array<WordType>): Array<WordType> => {
+        const newPallet = [];
+        const words = props.data.sentenceByWords
+
+        let order = 1;
+        for(let i = 1; i <= words.length; i++){
+            const word = pallet.find(item => item.initialOrder === i);
+
+            if(!word){
+                continue;
+            }
+            word.order = order;
+            order++;
+            newPallet.push(word);
+        }
+        return newPallet;
+    }
+
     const onCheckSentenceDrop = (item: OnCheckDropItem) => {
-        const newOnCheck: Array<WordType> = [...itemsOnCheck];
-        const newPallet: Array<WordType> = [...itemsInPallet];
+        let newOnCheck: Array<WordType> = [...itemsOnCheck];
+        let newPallet: Array<WordType> = [...itemsInPallet];
 
         newPallet.splice(newPallet.indexOf(item.object), 1);
         newOnCheck.push(item.object);
+        newPallet = sortPalletItems(newPallet);
         setItemsOnCheck(newOnCheck);
         setItemsInPallet(newPallet);
     }
 
     const onPalletDrop = (item: PalletDropItem) => {
-        const newOnCheck: Array<WordType> = [...itemsOnCheck];
-        const newPallet: Array<WordType> = [...itemsInPallet];
+        let newOnCheck: Array<WordType> = [...itemsOnCheck];
+        let newPallet: Array<WordType> = [...itemsInPallet];
 
         newOnCheck.splice(newOnCheck.indexOf(item.object), 1);
         newPallet.push(item.object);
         setItemsInPallet(newPallet);
         setItemsOnCheck(newOnCheck);
+        setTimeout(() => {
+            setItemsInPallet(sortPalletItems(newPallet));
+        }, 30)
     }
 
     const onCheckClick = (ev: React.MouseEvent<HTMLButtonElement>): void => {
