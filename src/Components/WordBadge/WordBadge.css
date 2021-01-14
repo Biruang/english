@@ -1,24 +1,29 @@
-.word-badge,
-.word-badge-dragged{
-    display: inline-block;
+.word-badge-container{
+    position: relative;
+    height: 32px;
+    width: 72px;
+    background: #E6E6E6;
+    /*border: 1px solid transparent;*/
+    box-shadow: inset 0 8px 4px -6px rgba(0, 0, 0, 0.25);
+    z-index: 1;
+    border-radius: 15px;
+}
+
+.word-badge {
+    position: relative;
     width: 44px;
     height: 21px;
     padding: 4px 13px 5px 13px;
-    margin-bottom: 15px;
     border-radius: 15px;
     font-size: 18px;
     line-height: 21px;
     text-align: center;
+    z-index: 2;
+    border: 1px solid #C9C9C9;
+    box-shadow: 0 8px 4px -6px rgba(0, 0, 0, 0.25);
+    background-color: #FFFFFF;
 }
 
 .word-badge{
-    border: 1px solid #C9C9C9;
-    box-shadow: 0 8px 4px -6px rgba(0, 0, 0, 0.25);
-}
 
-.word-badge-dragged{
-    color: #E6E6E6;
-    background: #E6E6E6;
-    border: 1px solid transparent;
-    box-shadow: inset 0 8px 4px -6px rgba(0, 0, 0, 0.25);
 }

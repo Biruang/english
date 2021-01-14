@@ -1,19 +1,22 @@
 import React from "react";
-import {useDrag} from 'react-dnd';
+import {useDrag, useDrop} from 'react-dnd';
 
 import './WordBadge.css';
 import {WordType} from "../../Assets/data";
+import {PalletDropItem} from "../WordBadgesPallet/WordBadgesPallet";
 
 interface IWordBadge {
     word?: WordType,
-    draggable?: boolean,
-    empty?: boolean
+    empty?: boolean,
+    onDrag?: Function,
+    onDrop?: Function,
+    type: string
 }
 
 const WordBadge: React.FC<IWordBadge> = (props) => {
-    const [{ isDragging }, drag, preview] = useDrag({
+    const [{ isDragging }, drag] = useDrag({
         item: {
-            type: "word",
+            type: props.type,
             object: props.word
         },
         collect: monitor => ({
@@ -23,11 +26,19 @@ const WordBadge: React.FC<IWordBadge> = (props) => {
 
     return(
         <div
-            ref={drag}
-            draggable={props.draggable}
-            className={isDragging || props.empty ? "word-badge-dragged" : "word-badge"}
+            className="word-badge-container"
         >
-            {props.word && props.word.text}
+            {
+                !props.empty ? (
+                    <div
+                        ref={drag}
+                        className="word-badge"
+                        style={{display: isDragging ? "none" : "block"}}
+                    >
+                        {props.word && props.word.text}
+                    </div>
+                ): null
+            }
         </div>
     )
 }

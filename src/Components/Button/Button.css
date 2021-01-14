@@ -19,3 +19,7 @@
     background: linear-gradient(91.2deg, #FFFFFF 0%, #F2F2F2 100%);
     box-shadow: inset -2px -4px 12px #FFFFFF, inset 2px 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+.button:disabled{
+    opacity: 0.5;
+}

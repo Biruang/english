@@ -2,10 +2,20 @@ import React from 'react';
 
 import './Button.css';
 
-const Button: React.FC = ({children}) => {
+interface IButton {
+    onClick?: (ev: React.MouseEvent<HTMLButtonElement>) => void,
+    disabled?: boolean
+}
+
+
+const Button: React.FC<IButton> = (props) => {
     return(
-        <button className="button">
-            {children}
+        <button
+            onClick={props.onClick}
+            className="button"
+            disabled={props.disabled}
+        >
+            {props.children}
         </button>
     )
 }

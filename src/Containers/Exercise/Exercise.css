@@ -15,10 +15,21 @@
     margin-bottom: 50px;
 }
 
-.exercise-constructor-wrap{
+.sentence-constructor-container{
     margin-bottom: 57px;
 }
 
+.sentence-constructor-on-check{
+    margin-bottom: 50px;
+}
+
+.sentence-constructor-pallet{
+
+}
+
+.exercise-result-wrap{
+    margin-bottom: 22px;
+}
+
 .exercise-button-wrap{
-    margin-bottom: 27px;
 }
