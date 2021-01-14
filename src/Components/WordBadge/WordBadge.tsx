@@ -1,16 +1,18 @@
-import React from "react";
+import React, {forwardRef, createRef} from "react";
 import {useDrag, useDrop} from 'react-dnd';
 
 import './WordBadge.css';
 import {WordType} from "../../Assets/data";
 import {PalletDropItem} from "../WordBadgesPallet/WordBadgesPallet";
+import AnimateReorder from "../AnimateReorder";
 
 interface IWordBadge {
     word?: WordType,
     empty?: boolean,
     onDrag?: Function,
     onDrop?: Function,
-    type: string
+    type: string,
+    ref?: any
 }
 
 const WordBadge: React.FC<IWordBadge> = (props) => {
@@ -24,6 +26,12 @@ const WordBadge: React.FC<IWordBadge> = (props) => {
         })
     })
 
+    const RefWrap = forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivElement>>(({ children }, ref) => (
+       <div ref={ref}>
+           {children}
+       </div>
+    ));
+
     return(
         <div
             className="word-badge-container"
@@ -32,10 +40,17 @@ const WordBadge: React.FC<IWordBadge> = (props) => {
                 !props.empty ? (
                     <div
                         ref={drag}
-                        className="word-badge"
                         style={{display: isDragging ? "none" : "block"}}
                     >
-                        {props.word && props.word.text}
+                        <AnimateReorder>
+                            <RefWrap ref={createRef()} key={props.word && props.word.order}>
+                                <div
+                                    className="word-badge"
+                                >
+                                    {props.word && props.word.text}
+                                </div>
+                            </RefWrap>
+                        </AnimateReorder>
                     </div>
                 ): null
             }
