@@ -1,4 +1,4 @@
-import React, {DragEvent} from "react";
+import React from "react";
 import {useDrop} from "react-dnd";
 
 import './SentenceOnCheck.css';
@@ -45,7 +45,7 @@ const SentenceOnCheck: React.FC<ISentenceOnCheck> = (props) => {
             style={{height: props.rows * 40}}
         >
             {
-                props.items.map(item => <WordBadge type="on-check-word" word={item} />)
+                props.items.map((item, index) => <WordBadge key={index} type="on-check-word" word={item} />)
             }
             {dividers}
         </div>

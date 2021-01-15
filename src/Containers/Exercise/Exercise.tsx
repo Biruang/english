@@ -19,7 +19,7 @@ interface IExercise {
 const Exercise: React.FC<IExercise> = (props) => {
     const [itemsInPallet, setItemsInPallet] = useState(props.data.sentenceByWords);
     const [itemsOnCheck, setItemsOnCheck] = useState<Array<WordType>>([]);
-    const [rowNumber, setRowNumber] = useState(Math.ceil(props.data.sentenceByWords.length / 6));
+    const [rowNumber, ] = useState(Math.ceil(props.data.sentenceByWords.length / 6));
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [isResultShown, setIsResultShown] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
@@ -59,17 +59,19 @@ const Exercise: React.FC<IExercise> = (props) => {
         setItemsInPallet(newPallet);
     }
 
-    const onPalletDrop = (item: PalletDropItem) => {
+    const onPalletDrop = (item: PalletDropItem, order: number) => {
         let newOnCheck: Array<WordType> = [...itemsOnCheck];
         let newPallet: Array<WordType> = [...itemsInPallet];
+        let newObject = item.object;
+        newObject.order = order;
 
         newOnCheck.splice(newOnCheck.indexOf(item.object), 1);
-        newPallet.push(item.object);
+        newPallet.push(newObject);
         setItemsInPallet(newPallet);
         setItemsOnCheck(newOnCheck);
         setTimeout(() => {
             setItemsInPallet(sortPalletItems(newPallet));
-        }, 30)
+        }, 50)
     }
 
     const onCheckClick = (ev: React.MouseEvent<HTMLButtonElement>): void => {

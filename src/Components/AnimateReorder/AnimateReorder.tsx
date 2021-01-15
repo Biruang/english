@@ -1,6 +1,6 @@
 import React, {useState, useLayoutEffect, useEffect} from "react";
 import usePrevious from '../../Hooks/usePrevious';
-import calculateBoundingBoxes from "../../Helpers/calculateBoundingBoxes";
+// import calculateBoundingBox from "../../Helpers/calculateBoundingBox";
 
 import './AnimateReorder.css';
 
@@ -10,13 +10,13 @@ const AnimateReorder: React.FC = ({children}) => {
     const prevChildren = usePrevious(children);
 
     useLayoutEffect(() => {
-        const newBoundingBox = calculateBoundingBoxes(children);
-        setBoundingBox(newBoundingBox);
+        // const newBoundingBox = calculateBoundingBox(children);
+        // setBoundingBox(newBoundingBox);
     }, [children]);
 
     useLayoutEffect(() => {
-        const prevBoundingBox = calculateBoundingBoxes(prevChildren);
-        setPrevBoundingBox(prevBoundingBox);
+        // const prevBoundingBox = calculateBoundingBox(prevChildren);
+        // setPrevBoundingBox(prevBoundingBox);
     }, [prevChildren]);
 
     useEffect(() => {
@@ -24,16 +24,16 @@ const AnimateReorder: React.FC = ({children}) => {
 
         if (hasPrevBoundingBox) {
             React.Children.forEach(children, (child) => {
-                debugger
                 // @ts-ignore
                 const domNode = child && child.ref.current;
                 // @ts-ignore
                 const firstBox = prevBoundingBox[Number.parseInt(child.key)];
                 // @ts-ignore
                 const lastBox = boundingBox[Number.parseInt(child.key)];
-                // if(firstBox.left === 0 || firstBox.top === 0){
-                //     return;
-                // }
+                if(!firstBox || !lastBox){
+                    return;
+                }
+                debugger
 
                 const changeInX = firstBox.left - lastBox.left;
                 const changeInY = firstBox.top - lastBox.top;

@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React from "react";
 import WordBadge from "../WordBadge";
-import {useDrop} from "react-dnd";
 
 import './WordBadgesPallet.css';
 import {WordType} from "../../Assets/data";
+import BadgeDropCell from "../BadgeDropCell";
 
 
 interface IWordBadgesPallet {
@@ -18,21 +18,6 @@ export type PalletDropItem = {
 }
 
 const WordBadgesPallet: React.FC<IWordBadgesPallet> = (props) => {
-    const [{droppedItem, isOver}, drop] = useDrop({
-        accept: "on-check-word",
-        drop: (item: PalletDropItem) => {
-          props.onDrop && props.onDrop(item);
-        },
-        collect: monitor => ({
-            droppedItem: monitor.getItem(),
-            isOver: monitor.isOver()
-        })
-    })
-
-    const onBadgeDrop = (item: PalletDropItem) => {
-        debugger
-    }
-
     //TODO: Заменить для адаптива
     const cellNumber = props.rows * 6;
     const cells = [];
@@ -42,15 +27,18 @@ const WordBadgesPallet: React.FC<IWordBadgesPallet> = (props) => {
         });
 
         if(!item){
-            cells.push(<WordBadge onDrop={onBadgeDrop} type="pallet-word" empty />);
+            cells.push(<BadgeDropCell type="on-check-word" order={i + 1} onDrop={props.onDrop} />);
             continue;
         }
-        cells.push(<WordBadge type="pallet-word" word={item} />)
+        cells.push(
+            <BadgeDropCell type="on-check-word" order={i} onDrop={() => {}}>
+                <WordBadge  key={i} type="pallet-word" word={item} />
+            </BadgeDropCell>
+        );
     }
 
     return(
         <div
-            ref={drop}
             className="word-badges-pallet-container"
         >
             {cells}
