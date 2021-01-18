@@ -10,7 +10,7 @@ interface IDropWrapper {
 }
 
 const BadgeDropCell: React.FC<IDropWrapper> = (props) => {
-    const [{}, drop] = useDrop({
+    const [, drop] = useDrop({
         accept: props.type,
         drop: item => {
             props.onDrop(item, props.order);

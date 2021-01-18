@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import ExerciseDisplay from "../../Components/ExerciseDisplay/ExerciseDisplay";
 import Button from "../../Components/Button";
-import {SentenceType, WordType} from "../../Assets/data";
+import data, {WordType} from "../../Assets/data";
 
 import './Exercise.css';
 import {OnCheckDropItem} from "../../Components/SentenceOnCheck/SentenceOnCheck";
@@ -13,26 +13,29 @@ import {DndProvider} from "react-dnd";
 import Results from "../../Components/Results";
 
 interface IExercise {
-    data: SentenceType
+    data: Array<WordType>
 }
 
 const Exercise: React.FC<IExercise> = (props) => {
-    const [itemsInPallet, setItemsInPallet] = useState(props.data.sentenceByWords);
+    const [itemsInPallet, setItemsInPallet] = useState(props.data);
     const [itemsOnCheck, setItemsOnCheck] = useState<Array<WordType>>([]);
-    const [rowNumber, ] = useState(Math.ceil(props.data.sentenceByWords.length / 6));
+    const [rowNumber, ] = useState(Math.ceil(props.data.length / 6));
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [isResultShown, setIsResultShown] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
 
     useEffect(() => {
-        if(itemsOnCheck.length === props.data.sentenceByWords.length){
+        if(itemsOnCheck.length === props.data.length){
             setIsButtonDisabled(false);
+        } else {
+            setIsButtonDisabled(true);
+            setIsResultShown(false);
         }
     }, [itemsOnCheck, props.data]);
 
     const sortPalletItems = (pallet: Array<WordType>): Array<WordType> => {
         const newPallet = [];
-        const words = props.data.sentenceByWords
+        const words = props.data
 
         let order = 1;
         for(let i = 1; i <= words.length; i++){
@@ -75,13 +78,21 @@ const Exercise: React.FC<IExercise> = (props) => {
     }
 
     const onCheckClick = (ev: React.MouseEvent<HTMLButtonElement>): void => {
-        const correctWords: Array<WordType> = props.data.sentenceByWords;
+        const correctWords: Array<WordType> = props.data;
         let isCorrect = true;
         for(let i = 0; i < correctWords.length; i++){
-            if(correctWords[i].text !== itemsOnCheck[i].text){
+            if(correctWords[i].translation !== itemsOnCheck[i].translation){
                 isCorrect = false
                 break;
             }
+        }
+        if(isCorrect){
+            let text: string = "";
+            data.forEach(word => {
+                text = text + " " + word.translation;
+            });
+            let msg = new SpeechSynthesisUtterance(text);
+            window.speechSynthesis.speak(msg);
         }
         setIsCorrect(isCorrect);
         setIsResultShown(true);
@@ -94,7 +105,7 @@ const Exercise: React.FC<IExercise> = (props) => {
             </h1>
 
             <div className="exercise-display-wrap">
-                <ExerciseDisplay words={props.data.sentenceByWords} />
+                <ExerciseDisplay words={props.data} />
             </div>
 
             <div className="sentence-constructor-container">

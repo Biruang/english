@@ -27,12 +27,26 @@ const WordBadgesPallet: React.FC<IWordBadgesPallet> = (props) => {
         });
 
         if(!item){
-            cells.push(<BadgeDropCell type="on-check-word" order={i + 1} onDrop={props.onDrop} />);
+            cells.push(
+                <BadgeDropCell
+                    type="on-check-word"
+                    order={i + 1}
+                    onDrop={props.onDrop}
+                />
+            );
             continue;
         }
         cells.push(
-            <BadgeDropCell type="on-check-word" order={i} onDrop={() => {}}>
-                <WordBadge  key={i} type="pallet-word" word={item} />
+            <BadgeDropCell
+                type="on-check-word"
+                order={i}
+                onDrop={() => {}}
+            >
+                <WordBadge
+                    key={i}
+                    type="pallet-word"
+                    word={item}
+                />
             </BadgeDropCell>
         );
     }

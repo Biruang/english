@@ -6,7 +6,7 @@ import {WordType} from "../../Assets/data";
 
 interface IWordBadge {
     word: WordType,
-    type: string,
+    type: string
 }
 
 const WordBadge: React.FC<IWordBadge> = (props) => {
@@ -27,7 +27,7 @@ const WordBadge: React.FC<IWordBadge> = (props) => {
             key={props.word.initialOrder}
             className="word-badge"
         >
-            {props.word.text}
+            {props.word.translation}
         </div>
     )
 }
