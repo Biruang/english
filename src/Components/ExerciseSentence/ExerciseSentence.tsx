@@ -1,8 +1,8 @@
 import React from "react";
 
-import './ExerciseSentence.css';
 import {WordType} from "../../Assets/data";
 import WordWithTranslation from "../WordWithTranslation";
+import styled from "styled-components";
 
 interface IExerciseSentence {
     item: Array<WordType>
@@ -10,12 +10,19 @@ interface IExerciseSentence {
 
 const ExerciseSentence: React.FC<IExerciseSentence> = ({ item }) => {
     return (
-        <div className="exercise-sentence-container">
+        <ExerciseSentenceContainer>
             {
-                item.map(i => <WordWithTranslation text={i.text} translation={i.translation} />)
+                item.map((i, index) => <WordWithTranslation key={index} text={i.text} translation={i.translation} />)
             }
-        </div>
+        </ExerciseSentenceContainer>
     )
 }
+
+const ExerciseSentenceContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-height: 21px;
+`
 
 export default ExerciseSentence;

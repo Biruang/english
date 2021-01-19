@@ -1,64 +1,78 @@
-import React, {useState} from "react";
-import SentenceOnCheck from "../SentenceOnCheck";
-import WordBadgesPallet from "../WordBadgesPallet";
-import {SentenceType, WordType} from "../../Assets/data";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-
-import './SentenceConstructor.css';
-import {OnCheckDropItem} from "../SentenceOnCheck/SentenceOnCheck";
-import {PalletDropItem} from "../WordBadgesPallet/WordBadgesPallet";
+import React from "react";
+import styled from "styled-components";
+import {WordType} from "../../Assets/data";
+import {HTML5Backend} from "react-dnd-html5-backend";
+import {DndProvider} from "react-dnd";
+import OnCheckList from "../OnCheckList";
+import WordsList from "../WordsList";
+import {WordCellDropType} from "../WordCell/WordCell";
+import WordDropWrap from "../WordDropWrap";
 
 interface ISentenceConstructor {
-    items: SentenceType
+    itemsInPallet: Array<WordType>;
+    itemsOnCheck: Array<WordType>;
+    onPalletChange: (newPallet: Array<WordType>) => void;
+    onCheckChange: (newOnChange: Array<WordType>) => void;
+    rows: number
 }
 
-const SentenceConstructor: React.FC<ISentenceConstructor> = ({ items }) => {
-    const [itemsInPallet, setItemsInPallet] = useState(items.sentenceByWords);
-    const [itemsOnCheck, setItemsOnCheck] = useState<Array<WordType>>([]);
-    const [rowNumber, setRowNumber] = useState(Math.ceil(items.sentenceByWords.length / 6))
+const SentenceConstructor: React.FC<ISentenceConstructor> = (props) => {
+    const onCheckSentenceDrop = (item: WordCellDropType) => {
+        let newOnCheck: Array<WordType> = [...props.itemsOnCheck];
+        let newPallet: Array<WordType> = [...props.itemsInPallet];
+        const droppedItem = newPallet.find(i => i.id === item.id);
+        if(!droppedItem){
+            return;
+        }
 
-    const onCheckDrop = (item: OnCheckDropItem) => {
-        const newOnCheck: Array<WordType> = itemsOnCheck;
-        const newPallet: Array<WordType> = itemsInPallet;
-
-        newPallet.splice(newPallet.indexOf(item.object), 1);
-        newOnCheck.push(item.object);
-        setItemsOnCheck(newOnCheck);
-        setItemsInPallet(newPallet);
+        newPallet.splice(newPallet.indexOf(droppedItem), 1);
+        newOnCheck.push(droppedItem);
+        props.onCheckChange(newOnCheck);
+        props.onPalletChange(newPallet);
     }
 
-    const onPalletDrop = (item: PalletDropItem) => {
-        const newOnCheck: Array<WordType> = itemsOnCheck;
-        const newPallet: Array<WordType> = itemsInPallet;
+    const onPalletDrop = (item: WordCellDropType, order: number) => {
+        let newOnCheck: Array<WordType> = [...props.itemsOnCheck];
+        let newPallet: Array<WordType> = [...props.itemsInPallet];
+        let droppedItem = newOnCheck.find(i => i.id === item.id);
+        if(!droppedItem){
+            return;
+        }
 
-        newOnCheck.splice(newOnCheck.indexOf(item.object), 1);
-        newPallet.push(item.object);
-        setItemsInPallet(newPallet);
-        setItemsOnCheck(newOnCheck);
+        droppedItem.order = order;
+        newOnCheck.splice(newOnCheck.indexOf(droppedItem), 1);
+        newPallet.push(droppedItem);
+        props.onCheckChange(newOnCheck);
+        props.onPalletChange(newPallet);
     }
 
     return(
         <DndProvider backend={HTML5Backend}>
-            <div className="sentence-constructor-container">
-                <div className="sentence-constructor-on-check">
-                    <SentenceOnCheck
-                        rows={rowNumber}
-                        onDrop={onCheckDrop}
-                        items={itemsOnCheck}
+            <OnCheckContainer>
+                <WordDropWrap type="pallet-word" onDrop={onCheckSentenceDrop}>
+                    <OnCheckList
+                        rows={props.rows}
+                        items={props.itemsOnCheck}
                     />
-                </div>
+                </WordDropWrap>
+            </OnCheckContainer>
 
-                <div className="sentence-constructor-pallet">
-                    <WordBadgesPallet
-                        rows={rowNumber}
-                        onDrop={onPalletDrop}
-                        items={itemsInPallet}
-                    />
-                </div>
-            </div>
+            <WordsListContainer>
+                <WordsList
+                    rows={props.rows}
+                    onDrop={onPalletDrop}
+                    items={props.itemsInPallet}
+                />
+            </WordsListContainer>
         </DndProvider>
     )
 }
+
+const OnCheckContainer = styled.div`
+  margin-bottom: 50px;
+`
+
+const WordsListContainer = styled.div`
+`
 
 export default SentenceConstructor;

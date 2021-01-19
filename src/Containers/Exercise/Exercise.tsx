@@ -1,16 +1,12 @@
 import React, {useEffect, useState} from "react";
+import styled from "styled-components";
+
 import ExerciseDisplay from "../../Components/ExerciseDisplay/ExerciseDisplay";
 import Button from "../../Components/Button";
 import data, {WordType} from "../../Assets/data";
 
-import './Exercise.css';
-import {OnCheckDropItem} from "../../Components/SentenceOnCheck/SentenceOnCheck";
-import {PalletDropItem} from "../../Components/WordBadgesPallet/WordBadgesPallet";
-import {HTML5Backend} from "react-dnd-html5-backend";
-import SentenceOnCheck from "../../Components/SentenceOnCheck";
-import WordBadgesPallet from "../../Components/WordBadgesPallet";
-import {DndProvider} from "react-dnd";
 import Results from "../../Components/Results";
+import SentenceConstructor from "../../Components/SentenceConstructor";
 
 interface IExercise {
     data: Array<WordType>
@@ -51,32 +47,6 @@ const Exercise: React.FC<IExercise> = (props) => {
         return newPallet;
     }
 
-    const onCheckSentenceDrop = (item: OnCheckDropItem) => {
-        let newOnCheck: Array<WordType> = [...itemsOnCheck];
-        let newPallet: Array<WordType> = [...itemsInPallet];
-
-        newPallet.splice(newPallet.indexOf(item.object), 1);
-        newOnCheck.push(item.object);
-        newPallet = sortPalletItems(newPallet);
-        setItemsOnCheck(newOnCheck);
-        setItemsInPallet(newPallet);
-    }
-
-    const onPalletDrop = (item: PalletDropItem, order: number) => {
-        let newOnCheck: Array<WordType> = [...itemsOnCheck];
-        let newPallet: Array<WordType> = [...itemsInPallet];
-        let newObject = item.object;
-        newObject.order = order;
-
-        newOnCheck.splice(newOnCheck.indexOf(item.object), 1);
-        newPallet.push(newObject);
-        setItemsInPallet(newPallet);
-        setItemsOnCheck(newOnCheck);
-        setTimeout(() => {
-            setItemsInPallet(sortPalletItems(newPallet));
-        }, 50)
-    }
-
     const onCheckClick = (ev: React.MouseEvent<HTMLButtonElement>): void => {
         const correctWords: Array<WordType> = props.data;
         let isCorrect = true;
@@ -98,50 +68,79 @@ const Exercise: React.FC<IExercise> = (props) => {
         setIsResultShown(true);
     }
 
+    const onPalletChange = (newPallet: Array<WordType>) => {
+        setItemsInPallet(newPallet);
+
+        setTimeout(() => {
+            setItemsInPallet(sortPalletItems(newPallet));
+        }, 50);
+    }
+
+    const onCheckChange = (newOnCheck: Array<WordType>) => {
+        setItemsOnCheck(newOnCheck);
+    }
+
     return (
-        <div className="exercise-container">
-            <h1 className="exercise-header">
+        <ExerciseContainer>
+            <ExerciseHeader>
                 Переведите предложение
-            </h1>
+            </ExerciseHeader>
 
-            <div className="exercise-display-wrap">
+            <ExerciseDisplayContainer>
                 <ExerciseDisplay words={props.data} />
-            </div>
+            </ExerciseDisplayContainer>
 
-            <div className="sentence-constructor-container">
-                <DndProvider backend={HTML5Backend}>
-                    <div className="sentence-constructor-on-check">
-                        <SentenceOnCheck
-                            rows={rowNumber}
-                            onDrop={onCheckSentenceDrop}
-                            items={itemsOnCheck}
-                        />
-                    </div>
+            <SentenceConstructorContainer>
+                <SentenceConstructor
+                    itemsInPallet={itemsInPallet}
+                    itemsOnCheck={itemsOnCheck}
+                    onPalletChange={onPalletChange}
+                    onCheckChange={onCheckChange}
+                    rows={rowNumber}
+                />
+            </SentenceConstructorContainer>
 
-                    <div className="sentence-constructor-pallet">
-                        <WordBadgesPallet
-                            rows={rowNumber}
-                            onDrop={onPalletDrop}
-                            items={itemsInPallet}
-                        />
-                    </div>
-                </DndProvider>
-            </div>
-
-            <div className="exercise-result-wrap">
+            <ExerciseResultContainer>
                 <Results shown={isResultShown} correct={isCorrect} />
-            </div>
+            </ExerciseResultContainer>
 
-            <div className="exercise-button-wrap">
+            <ExerciseButtonContainer>
                 <Button
                     onClick={onCheckClick}
                     disabled={isButtonDisabled}
                 >
                     Проверить
                 </Button>
-            </div>
-        </div>
+            </ExerciseButtonContainer>
+        </ExerciseContainer>
     );
 }
+
+const ExerciseContainer = styled.div`
+  width: 470px;
+`
+
+const ExerciseHeader = styled.h1`
+  font-size: 36px;
+  font-weight: 400;
+  text-shadow: -2px -4px 3px #FFFFFF, 2px 4px 3px rgba(0, 0, 0, 0.25);
+  color: #252525;
+  margin-bottom: 56px;
+`
+
+const ExerciseDisplayContainer = styled.div`
+  margin-bottom: 50px;
+`
+
+const SentenceConstructorContainer = styled.div`
+  margin-bottom: 57px;
+`
+
+const ExerciseResultContainer = styled.div`
+  margin-bottom: 22px;
+`
+
+const ExerciseButtonContainer = styled.div`
+`
 
 export default Exercise;

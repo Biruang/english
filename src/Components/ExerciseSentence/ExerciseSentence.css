@@ -1,6 +1,0 @@
-.exercise-sentence-container{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    min-height: 21px;
-}
