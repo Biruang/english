@@ -3,7 +3,8 @@ export type WordType = {
     text: string,
     translation: string,
     initialOrder: number,
-    order: number
+    order: number,
+    prevOrder?: number
 }
 
 export type SentenceType = {
@@ -31,7 +32,35 @@ export const data: Array<WordType> = [
         translation: "корм",
         initialOrder: 3,
         order: 3
-    }
+    },
+    {
+        id: 4,
+        text: "ssss",
+        translation: "кот",
+        initialOrder: 4,
+        order: 4
+    },
+    {
+        id: 5,
+        text: "aaaa",
+        translation: "ел",
+        initialOrder: 5,
+        order: 5
+    },
+    {
+        id: 6,
+        text: "aaaa",
+        translation: "корм",
+        initialOrder: 6,
+        order: 6
+    },
+    {
+        id: 7,
+        text: "ssss",
+        translation: "кот",
+        initialOrder: 7,
+        order: 7
+    },
 ]
 
 export default data;

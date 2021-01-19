@@ -2,7 +2,6 @@ import React, {ReactNode, useCallback, useEffect, useState} from "react";
 import styled from "styled-components";
 import {WordType} from "../../Assets/data";
 import WordCell from "../WordCell";
-import WordDropWrap from "../WordDropWrap";
 import {WordCellDropType} from "../WordCell/WordCell";
 
 interface IWordsPallet {
@@ -26,23 +25,22 @@ const WordsList: React.FC<IWordsPallet> = (props) => {
 
             if(!item){
                 newCells.push(
-                    <WordDropWrap
-                        type="on-check-word"
+                    <WordCell
+                        key={i}
+                        dropType="on-check-word"
                         onDrop={(item) => onDrop(item, i + 1)}
-                    >
-                        <WordCell
-                            key={i}
-                            dragType="pallet-word"
-                        />
-                    </WordDropWrap>
+                    />
                 );
                 continue;
             }
             newCells.push(
                 <WordCell
                     key={i}
+                    dropType="on-check-word"
                     dragType="pallet-word"
                     id={item.id}
+                    order={item.order}
+                    prevOrder={item.prevOrder}
                 >
                     {item.text}
                 </WordCell>

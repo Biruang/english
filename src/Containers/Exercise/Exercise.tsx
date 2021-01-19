@@ -40,6 +40,7 @@ const Exercise: React.FC<IExercise> = (props) => {
             if(!word){
                 continue;
             }
+            word.prevOrder = word.order;
             word.order = order;
             order++;
             newPallet.push(word);
@@ -69,11 +70,7 @@ const Exercise: React.FC<IExercise> = (props) => {
     }
 
     const onPalletChange = (newPallet: Array<WordType>) => {
-        setItemsInPallet(newPallet);
-
-        setTimeout(() => {
-            setItemsInPallet(sortPalletItems(newPallet));
-        }, 50);
+        setItemsInPallet(sortPalletItems(newPallet));
     }
 
     const onCheckChange = (newOnCheck: Array<WordType>) => {
@@ -101,7 +98,10 @@ const Exercise: React.FC<IExercise> = (props) => {
             </SentenceConstructorContainer>
 
             <ExerciseResultContainer>
-                <Results shown={isResultShown} correct={isCorrect} />
+                <Results
+                    shown={isResultShown}
+                    correct={isCorrect}
+                />
             </ExerciseResultContainer>
 
             <ExerciseButtonContainer>

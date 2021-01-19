@@ -6,7 +6,6 @@ import {DndProvider} from "react-dnd";
 import OnCheckList from "../OnCheckList";
 import WordsList from "../WordsList";
 import {WordCellDropType} from "../WordCell/WordCell";
-import WordDropWrap from "../WordDropWrap";
 
 interface ISentenceConstructor {
     itemsInPallet: Array<WordType>;
@@ -20,7 +19,7 @@ const SentenceConstructor: React.FC<ISentenceConstructor> = (props) => {
     const onCheckSentenceDrop = (item: WordCellDropType) => {
         let newOnCheck: Array<WordType> = [...props.itemsOnCheck];
         let newPallet: Array<WordType> = [...props.itemsInPallet];
-        const droppedItem = newPallet.find(i => i.id === item.id);
+        let droppedItem = newPallet.find(i => i.id === item.id);
         if(!droppedItem){
             return;
         }
@@ -49,12 +48,12 @@ const SentenceConstructor: React.FC<ISentenceConstructor> = (props) => {
     return(
         <DndProvider backend={HTML5Backend}>
             <OnCheckContainer>
-                <WordDropWrap type="pallet-word" onDrop={onCheckSentenceDrop}>
-                    <OnCheckList
-                        rows={props.rows}
-                        items={props.itemsOnCheck}
-                    />
-                </WordDropWrap>
+                <OnCheckList
+                    type="pallet-word"
+                    onDrop={onCheckSentenceDrop}
+                    rows={props.rows}
+                    items={props.itemsOnCheck}
+                />
             </OnCheckContainer>
 
             <WordsListContainer>

@@ -1,13 +1,20 @@
 import React from 'react';
-
-import './CenteredLayout.css';
+import styled from "styled-components";
 
 const CenteredLayout: React.FC = ({children}) => {
     return(
-        <div className="centered-layout-container">
+        <Layout>
             {children}
-        </div>
+        </Layout>
     )
 }
+
+const Layout = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
 export default CenteredLayout;
